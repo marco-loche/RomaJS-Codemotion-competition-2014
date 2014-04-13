@@ -1,17 +1,13 @@
 var getNumber = require('./lib/get-number');
 function convertNumeralToNumber(numeral) {
-  var decimal = 0;
-  for (var i = 0; i < numeral.length; i++) {
-    decimal += getDecimal(getNumber(numeral[i]), getNumber(numeral[i + 1]));
+  if (numeral.length === 1) {
+    return getNumber(numeral[0]);
   }
-  return decimal;
+  return getDecimal(getNumber(numeral[0]), getNumber(numeral[1])) + convertNumeralToNumber(numeral.substr(1, numeral.length));
 }
 
 var getDecimal = function (n, nPlusOne) {
-  if (nPlusOne) {
-    return (n < nPlusOne ? -n : n);
-  }
-  return n;
+  return (n < nPlusOne ? -n : n);
 }
 
 module.exports = convertNumeralToNumber;
